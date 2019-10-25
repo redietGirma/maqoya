@@ -16,12 +16,14 @@ const app= express();
 .catch(err => console.log('could not connect to mongodb', err));
 
 // app.use(express.json());
-app.use('/api/parents', parents);
 
 app.use(bodyParser.urlencoded({ extended:true}));
 app.use(bodyParser.json());
-app.use(router);
+
+
+app.use('/api/parents', parents);
 router.use(bodyParser.json());
+
 const port = process.env.PORT || 4449
 app.listen(port, () => console.log(`connected to port ${port}..`))
   

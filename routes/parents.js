@@ -8,32 +8,47 @@ const router = express.Router();
 router.post('/', async (req,res) =>{
     const {error} = validate(req.body);
     if (error){
-        console.log('req.body error')
-        return res.status(400).send(error.details[0].message);
+        return res.status(400).json(error.details[0].message);
     }
-    let parent =  Parent.findOne({email:req.body.email});
-    if (parent)  return res.status(400).send('user already exisits!');
+    let parent = await Parent.findOne({phoneNumber:req.body.phoneNumber});
+    if (parent)  return res.status(400).json('user already exisits!');
      console.log('second err');
      try{
-
-       // Insert the new parent if they do not exist yet
-        parent = new Parent(req.body);
+        // Insert the new parent if they do not exist yet
+        parent = new Parent ({
+            first_name: req.body.first_name,
+            last_name: req.body.last_name,
+            email: req.body.email,
+            phoneNumber: req.body.phoneNumber,
+            password: req.body.password,
+            
+        }); 
         await parent.save();
         res.send(parent);
      }
      catch(err){
-     console.log('error');
-       // res.send(err);
+    res.json(err);
      }
     
 });
+// router.get('/', async(req,res)=>{
+
+// })
+
+// async function createParent(){
+//   const parent = new Parent({
+//     First_name: 'Rediet',
+//     Last_name: 'Girma',
+//     username: 'rediG',
+//     email: 'redi@gmail.com',
+//     phoneNumber: '+251913904513'
+
+//   })
+//    const result = await parent.save();
+//    console.log(result);
+// }
+// createParent();
+
 module.exports = router;
 
 
-// {
-//     first_name: req.body.first_name,
-//     last_name: req.body.last_name,
-//     email: req.body.email,
-//     password: req.body.password,
-//     phoneNumber: req.body.phoneNumber,
-// }
