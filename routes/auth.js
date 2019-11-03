@@ -8,8 +8,12 @@ const Joi = require('joi');
 const Jwt = require('jsonwebtoken');
 const parent = require('./parents')
 const child = require('./child');
+const passportSetup = require('../config/passport-setup');
+const passport = require('passport');
 
-router.post('/', async (req,res) =>{
+
+//parents login
+router.post('/login', async (req,res) =>{
     const {error} = validate(req.body);
     if (error) return res.status(400).json(error.details[0].message);
     
@@ -21,10 +25,8 @@ router.post('/', async (req,res) =>{
 
     const token = Jwt.sign({_id: parent._id}, config.get('jwtPrivateKey'));
     res.send(token);
-       
-
-    
 });
+
 
  function validate(req){
   const schema = Joi.object({ 
@@ -33,4 +35,14 @@ router.post('/', async (req,res) =>{
         });
    return Joi.validate(req, schema);
     }
+
+
+    //parents login with google 
+    router.get('/google', passport.authenticate('google', {
+        scope: ['profile']
+    }));
+
+// router.get('/google', (req,res) => {
+//     res.send('logging in with passport');
+// });
 module.exports = router;

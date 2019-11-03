@@ -2,6 +2,7 @@ const Joi = require('joi');
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 const populate = require('node-populate');
+const Child = require('./child');
 
 
 const parentSchema = mongoose.Schema({
@@ -11,8 +12,8 @@ const parentSchema = mongoose.Schema({
     email: {type: String, required:true, unique:true},
     phoneNumber: {type: Number, required: true, unique: true},
      password: { type: String, required: true, minlength: 5, maxlength: 1024},
-     child: [{ type: Schema.Types.ObjectId, ref: 'Child'}],
-     daycare: [{type: Schema.Types.ObjectId,ref: 'Daycare'}],
+     children: [{ type: Schema.Types.ObjectId, ref: 'Child'}],
+     daycare: [{ type: Schema.Types.ObjectId, ref: 'Daycare'}]
 });
 
 function validateParent(parent){
@@ -22,12 +23,14 @@ function validateParent(parent){
        username: Joi.string().min(4).max(15).required(),
         email:Joi.string().min(7).max(20).required().email(),
         phoneNumber: Joi.string().min(5).max(50).required(),
-        password: Joi.string().min(5).max(1024).required()
+        password: Joi.string().min(5).max(1024).required(),
+        password_confirmation: Joi.any().valid(Joi.ref('password')).required().options({laguage: {any: { allowedOnly: 'must match password'}}})
         });
   return Joi.validate(parent, schema);
 
    
 }
+
 
 const Parent = mongoose.model('Parent',parentSchema);
 

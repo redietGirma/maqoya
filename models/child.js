@@ -2,6 +2,9 @@ const Joi = require('joi');
 const mongoose = require('mongoose');
 const populate = require('node-populate');
 const Schema = mongoose.Schema;
+const Parent = require('./parents');
+const Daycare = require('./daycare');
+
 
 const childSchema = mongoose.Schema({
     first_name: {type:String, required: true},
@@ -11,7 +14,8 @@ const childSchema = mongoose.Schema({
     medical_detail:[String],
     emergency_contact: {type:String, required:true},
     // img: { data: Buffer, contentType: String },
-    // parent : [{type: mongoose.Schema.Types.ObjectId, ref : 'Parent'}]
+    parent : [{type: mongoose.Schema.Types.ObjectId, ref : 'Parent'}],
+    daycares : [{type: mongoose.Schema.Types.ObjectId, ref : 'Daycare'}]
     
 });
 
