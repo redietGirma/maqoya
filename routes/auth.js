@@ -42,7 +42,9 @@ router.post('/login', async (req,res) =>{
         scope: ['profile']
     }));
 
-// router.get('/google', (req,res) => {
-//     res.send('logging in with passport');
-// });
+    router.get('/google/redirect', passport.authenticate('google'), (req,res) => {
+        res.send('you  have been redirected');
+    })
+
+
 module.exports = router;

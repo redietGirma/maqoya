@@ -24,6 +24,7 @@ router.post('/register',checkAuth, async (req,res) =>{
 });
 
 
+// get child 
 router.get('/:id', async (req,res)=>{
     try{
         const child = await Child.findOne({ _id: req.params.id }).populate('daycares').select('-password');

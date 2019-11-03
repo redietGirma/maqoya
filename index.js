@@ -33,6 +33,7 @@ app.use(bodyParser.json());
 
 app.use('/api/parents/register', parents);
 app.use('/api/parents',auth);
+app.use('/api/auth', auth);
 app.use('/api/child', child);
 app.use('/api/daycare/register', daycare);
 router.use(bodyParser.json());
