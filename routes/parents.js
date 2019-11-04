@@ -4,7 +4,7 @@ const router = express.Router();
 const _ = require('lodash');
 const bcrypt = require('bcrypt');
 const Jwt = require('jsonwebtoken');
-const config = require('config');
+const config = require('../config/index');
 
 
 // new parent registration route
@@ -21,7 +21,7 @@ router.post('/', async (req,res) =>{
         parent.password = await bcrypt.hash(parent.password, salt);
         await parent.save();
 
-        const token =  await Jwt.sign({_id: parent._id}, config.get('jwtPrivateKey'));
+        const token =  await Jwt.sign({_id: parent._id}, config.jwtPrivateKey);
         try{
         res.header('x-auth-token', token)
             res.send({data: _.pick(parent,['id','first_name','last_name','username','email','phoneNumber'])});
@@ -31,6 +31,8 @@ router.post('/', async (req,res) =>{
         }
     });
 
+
+  
 
  module.exports = router;
 

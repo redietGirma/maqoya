@@ -23,8 +23,12 @@ function validateParent(parent){
        username: Joi.string().min(4).max(15).required(),
         email:Joi.string().min(7).max(20).required().email(),
         phoneNumber: Joi.string().min(5).max(50).required(),
-        password: Joi.string().min(5).max(1024).required(),
-        password_confirmation: Joi.any().valid(Joi.ref('password')).required().options({laguage: {any: { allowedOnly: 'must match password'}}})
+        password: Joi.string().min(5).max(1024).required()
+        // password_confirmation: Joi.any().valid(Joi.ref('password')).required().options({
+        //   laguage: {
+        //     any: { 
+        //       allowedOnly: 'must match password'}}
+        //     })
         });
   return Joi.validate(parent, schema);
 

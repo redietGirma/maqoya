@@ -7,13 +7,12 @@ const Daycare = require('./daycare');
 
 
 const childSchema = mongoose.Schema({
-    first_name: {type:String, required: true},
-    last_name: {type:String, required: true},
+    name: {type:String, required: true},
     date_of_birth: {type: String, required: true},
-    gender: {type:String, required: true},
+    gender: {type:String},
     medical_detail:[String],
     emergency_contact: {type:String, required:true},
-    // img: { data: Buffer, contentType: String },
+    image: { type: String},
     parent : [{type: mongoose.Schema.Types.ObjectId, ref : 'Parent'}],
     daycares : [{type: mongoose.Schema.Types.ObjectId, ref : 'Daycare'}]
     
@@ -21,11 +20,10 @@ const childSchema = mongoose.Schema({
 
   function validateChild(child){
       const schema = Joi.object({
-        first_name: Joi.string().max(15).required(),
-        last_name: Joi.string().max(15).required(),
+        name: Joi.string().max(15).required(),
         date_of_birth: Joi.string().required(),
-         gender:Joi.string().required(),
-         medical_detail: Joi.string().required(),
+         gender:Joi.string(),
+         medical_detail: Joi.string(),
          emergency_contact: Joi.string().min(5).max(50).required(),
         //  img: Joi.Buffer()
       })

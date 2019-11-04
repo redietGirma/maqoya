@@ -1,4 +1,4 @@
-const config = require('config');
+const config = require('../config');
 const {Parent} = require('../models/parents');
 const express = require('express');
 const router = express.Router();
@@ -23,7 +23,7 @@ router.post('/login', async (req,res) =>{
     const validPassword = await bcrypt.compare(req.body.password, parent.password);
     if (!validPassword) return res.status(400).json('Invalid email or password');
 
-    const token = Jwt.sign({_id: parent._id}, config.get('jwtPrivateKey'));
+    const token = Jwt.sign({_id: parent._id}, config.jwtPrivateKey);
     res.send(token);
 });
 

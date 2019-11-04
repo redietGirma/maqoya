@@ -10,11 +10,7 @@ const daycareSchema = mongoose.Schema({
     email: {type:String},
     description: {type:String, required: true},
     phoneNumber:{type:String, required:true},
-    // rating:{type:String},
     location:[String],
-    // imageUrl:{type:String},
-    // date: {type: Date, default: Date.now},
-    // img: { data: Buffer, contentType: String },
     password: {type: String},
     child: [{ type: Schema.Types.ObjectId, ref: 'Child'}],
     parent : [{type: mongoose.Schema.Types.ObjectId, ref : 'Parent'}]
